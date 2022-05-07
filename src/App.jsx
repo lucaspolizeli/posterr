@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import { TextArea } from "./components/TextArea";
+import { FeedPage } from "./pages/Feed";
 import { GlobalStyle } from "./styles/global";
 
 export function App() {
@@ -8,10 +8,7 @@ export function App() {
       <GlobalStyle />
 
       <Header />
-
-      <div style={{ width: "50%" }}>
-        <TextArea />
-      </div>
+      <FeedPage />
     </>
   );
 }
