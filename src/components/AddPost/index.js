@@ -1,5 +1,6 @@
+import { Button } from "../Button";
 import { TextArea } from "../TextArea";
-import { AddPostContainer, AddPostTitle } from "./styles";
+import { AddPostContainer, AddPostTitle, ButtonContainer } from "./styles";
 
 export function AddPost({ userName }) {
   return (
@@ -9,6 +10,10 @@ export function AddPost({ userName }) {
       </AddPostTitle>
 
       <TextArea />
+
+      <ButtonContainer>
+        <Button />
+      </ButtonContainer>
     </AddPostContainer>
   );
 }
