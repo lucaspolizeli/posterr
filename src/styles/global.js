@@ -5,6 +5,8 @@ export const GlobalStyle = createGlobalStyle`
     --dark-gray: #7B7B89;
     --background: #F0F0F2;
     --medium-gray:  #e5e5e5;
+    
+    --twitter: #1DA1F2;
   }
   * {
     margin: 0;
