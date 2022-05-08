@@ -3,35 +3,66 @@ import {
   IconButtonsContainer,
   PostCardContainer,
   PostText,
+  QuoteContainer,
   RepostText,
   UserNameText,
 } from "./styles";
 
 import repostIcon from "../../assets/icons/repost.svg";
 import commentIcon from "../../assets/icons/comment.svg";
+import { postType } from "../../constants/post-type";
 
-export function PostCard() {
+export function PostCard({
+  type,
+  text,
+  author,
+  createdBy,
+  quoteUser,
+  quoteText,
+  onProfileClick,
+}) {
+  function handleOnClickOverUserProfile() {
+    onProfileClick(author.id);
+  }
+
+  function handleOnClickOverQuoteUserProfile() {
+    onProfileClick(quoteUser.id);
+  }
+
+  function handleOnClickOverWhoReposted() {
+    onProfileClick(createdBy.id);
+  }
+
   return (
     <PostCardContainer>
-      <RepostText>
-        ↓ repost by <span>ronaldinholoko</span>
-      </RepostText>
+      {type === postType.REPOST && (
+        <RepostText>
+          ↓ reposted by
+          <span onClick={handleOnClickOverWhoReposted}>@{createdBy.user}</span>
+        </RepostText>
+      )}
 
-      <UserNameText>Lucas</UserNameText>
-      <PostText>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </PostText>
+      <UserNameText onClick={handleOnClickOverUserProfile}>
+        @{author.user}
+      </UserNameText>
+      <PostText>{text}</PostText>
 
-      <IconButtonsContainer>
-        <IconButton image={repostIcon} />
-        <IconButton image={commentIcon} />
-      </IconButtonsContainer>
+      {type === postType.QUOTE && (
+        <QuoteContainer>
+          <UserNameText onClick={handleOnClickOverQuoteUserProfile}>
+            @{quoteUser.user}
+          </UserNameText>
+
+          <PostText>{quoteText}</PostText>
+        </QuoteContainer>
+      )}
+
+      {type === postType.POST && (
+        <IconButtonsContainer>
+          <IconButton image={repostIcon} />
+          <IconButton image={commentIcon} />
+        </IconButtonsContainer>
+      )}
     </PostCardContainer>
   );
 }
