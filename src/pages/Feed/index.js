@@ -1,5 +1,11 @@
 import { AddPost } from "../../components/AddPost";
-import { AddPostContainer, FeedContainer } from "./styles";
+import { PostCard } from "../../components/PostCard";
+import {
+  AddPostContainer,
+  Divider,
+  FeedContainer,
+  PostsContainer,
+} from "./styles";
 
 export function FeedPage() {
   return (
@@ -7,6 +13,14 @@ export function FeedPage() {
       <AddPostContainer>
         <AddPost userName={"Lucas"} />
       </AddPostContainer>
+
+      <PostsContainer>
+        <PostCard />
+
+        <Divider />
+
+        <PostCard />
+      </PostsContainer>
     </FeedContainer>
   );
 }
