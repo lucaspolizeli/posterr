@@ -6,7 +6,7 @@ export const CustomButton = styled.button`
   border-radius: 8px;
   border: none;
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 
   color: white;

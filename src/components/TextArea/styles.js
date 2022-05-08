@@ -10,5 +10,10 @@ export const CustomTextArea = styled.textarea`
   font-size: 16px;
   color: var(--dark-gray);
 
-  background-color: var(--medium-gray);
+  background-color: var(--background);
+`;
+
+export const CharactersRemainingText = styled.p`
+  color: var(--dark-gray);
+  font-size: 16px;
 `;

@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { Button } from "../Button";
-
-export const AddPostContainer = styled.div``;
 
 export const AddPostTitle = styled.h3`
   margin-bottom: 16px;

@@ -11,3 +11,10 @@ export const FeedContainer = styled.div`
     padding: 0 16px 0 16px;
   }
 `;
+
+export const AddPostContainer = styled.div`
+  background-color: white;
+
+  padding: 16px;
+  border-radius: 8px;
+`;

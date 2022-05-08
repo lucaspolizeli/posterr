@@ -1,19 +1,28 @@
+import { useState } from "react";
 import { Button } from "../Button";
 import { TextArea } from "../TextArea";
-import { AddPostContainer, AddPostTitle, ButtonContainer } from "./styles";
+import { AddPostTitle, ButtonContainer } from "./styles";
 
 export function AddPost({ userName }) {
+  const [textToPost, setTextToPost] = useState("");
+
+  function handleOnChangeTextArea(event) {
+    setTextToPost(event.target.value);
+  }
+
+  function handleOnClickToPost() {}
+
   return (
-    <AddPostContainer>
+    <div>
       <AddPostTitle>
         Hey <span>{userName}</span>! What do you want to post?
       </AddPostTitle>
 
-      <TextArea />
+      <TextArea value={textToPost} onChange={handleOnChangeTextArea} />
 
       <ButtonContainer>
-        <Button />
+        <Button text="Post" onClick={handleOnClickToPost} />
       </ButtonContainer>
-    </AddPostContainer>
+    </div>
   );
 }

@@ -1,20 +1,11 @@
-import propTypes from "prop-types";
 import React from "react";
-import { CustomTextArea } from "./styles";
+import { CharactersRemainingText, CustomTextArea } from "./styles";
 
-export function TextArea({ onChange, value, placeholder }) {
+export function TextArea({ onChange, value }) {
   return (
-    <CustomTextArea
-      maxLength={777}
-      onKeyUp={onChange}
-      defaultValue={value}
-      placeholder={placeholder}
-    />
+    <>
+      <CustomTextArea maxLength={777} onKeyUp={onChange} defaultValue={value} />
+      <CharactersRemainingText>{value.length}/777</CharactersRemainingText>
+    </>
   );
 }
-
-TextArea.propTypes = {
-  value: propTypes.string,
-  onChange: propTypes.func,
-  placeholder: propTypes.string,
-};

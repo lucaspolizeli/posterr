@@ -1,10 +1,12 @@
 import { AddPost } from "../../components/AddPost";
-import { FeedContainer } from "./styles";
+import { AddPostContainer, FeedContainer } from "./styles";
 
 export function FeedPage() {
   return (
     <FeedContainer>
-      <AddPost />
+      <AddPostContainer>
+        <AddPost userName={"Lucas"} />
+      </AddPostContainer>
     </FeedContainer>
   );
 }
