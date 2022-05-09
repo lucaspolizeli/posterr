@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { AddPost } from "../../components/AddPost";
 import { PostCard } from "../../components/PostCard";
+import { postsService } from "../../services/posts";
 import {
   AddPostContainer,
   Divider,
@@ -8,35 +10,16 @@ import {
 } from "./styles";
 
 export function FeedPage() {
-  const mock = {
-    id: 23423,
-    author: {
-      id: 1,
-      user: "lucaspolizeli",
-    },
-    type: "post",
-    text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-    mollit anim id est laborum.`,
-    createdBy: {
-      id: 2,
-      user: "thomas", // o cara que retweeta e afins fica aqui
-    },
-    quote: {
-      author: { id: 123, user: "ronald" },
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-      mollit anim id est laborum.`,
-    },
-  };
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchDataOnLoadFeed();
+  }, []);
+
+  async function fetchDataOnLoadFeed() {
+    const allPosts = await postsService.getAllPosts();
+    setPosts(allPosts);
+  }
 
   return (
     <FeedContainer>
@@ -45,16 +28,20 @@ export function FeedPage() {
       </AddPostContainer>
 
       <PostsContainer>
-        <PostCard
-          type={mock.type}
-          text={mock.text}
-          author={mock.author}
-          createdBy={mock.createdBy.user}
-          quoteText={mock?.quote?.text}
-          quoteUser={mock?.quote?.author}
-        />
+        {posts.map((currentPost, index) => (
+          <div key={currentPost.id}>
+            <PostCard
+              type={currentPost.type}
+              text={currentPost.text}
+              author={currentPost.author}
+              quoteText={currentPost?.quote?.text}
+              quoteUser={currentPost?.quote?.author}
+              createdBy={currentPost.createdBy.user}
+            />
 
-        <Divider />
+            {index !== posts.length && <Divider />}
+          </div>
+        ))}
       </PostsContainer>
     </FeedContainer>
   );
