@@ -4,7 +4,7 @@ export const PostCardContainer = styled.div`
   padding: 16px;
 `;
 
-export const UserNameText = styled.button`
+export const UserNameTextButton = styled.button`
   font-size: 18px;
   font-weight: 700;
 
@@ -29,7 +29,7 @@ export const RepostText = styled.h3`
   padding-bottom: 8px;
   color: var(--dark-gray);
 
-  a {
+  span {
     color: var(--twitter);
 
     &:hover {
@@ -38,28 +38,32 @@ export const RepostText = styled.h3`
   }
 `;
 
-export const QuoteContainer = styled.div`
+export const QuoteTextContainer = styled.div`
   padding-left: 16px;
   margin-top: 16px;
 
   border-left: 2px solid var(--medium-gray);
 `;
 
-export const IconButton = styled.button`
-  width: 16px;
-  height: 16px;
+export const ActionTextButton = styled.button`
+  font-size: 16px;
 
+  background-color: transparent;
+  font-weight: 700;
   border: none;
 
-  background: url(${({ image }) => image}) no-repeat transparent;
+  &:hover {
+    color: var(--twitter);
+    text-decoration: underline;
+  }
 
-  @media (max-width: 890px) {
-    width: 20px;
-    height: 20px;
+  &:last-child {
+    padding-left: 8px;
+    border-left: 1px solid var(--medium-gray);
   }
 `;
 
-export const IconButtonsContainer = styled.div`
+export const ActionTextButtonsContainer = styled.div`
   gap: 8px;
   margin-top: 16px;
 

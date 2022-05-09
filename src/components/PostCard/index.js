@@ -1,15 +1,13 @@
 import {
-  IconButton,
-  IconButtonsContainer,
+  ActionTextButton,
+  ActionTextButtonsContainer,
   PostCardContainer,
   PostText,
-  QuoteContainer,
+  QuoteTextContainer,
   RepostText,
-  UserNameText,
+  UserNameTextButton,
 } from "./styles";
 
-import repostIcon from "../../assets/icons/repost.svg";
-import commentIcon from "../../assets/icons/comment.svg";
 import { postType } from "../../constants/post-type";
 
 export function PostCard({
@@ -42,26 +40,29 @@ export function PostCard({
         </RepostText>
       )}
 
-      <UserNameText onClick={handleOnClickOverUserProfile}>
-        @{author.user}
-      </UserNameText>
-      <PostText>{text}</PostText>
+      {author && (
+        <UserNameTextButton onClick={handleOnClickOverUserProfile}>
+          @{author.user}
+        </UserNameTextButton>
+      )}
+
+      {text && <PostText>{text}</PostText>}
 
       {type === postType.QUOTE && (
-        <QuoteContainer>
-          <UserNameText onClick={handleOnClickOverQuoteUserProfile}>
+        <QuoteTextContainer>
+          <UserNameTextButton onClick={handleOnClickOverQuoteUserProfile}>
             @{quoteUser.user}
-          </UserNameText>
+          </UserNameTextButton>
 
           <PostText>{quoteText}</PostText>
-        </QuoteContainer>
+        </QuoteTextContainer>
       )}
 
       {type === postType.POST && (
-        <IconButtonsContainer>
-          <IconButton image={repostIcon} />
-          <IconButton image={commentIcon} />
-        </IconButtonsContainer>
+        <ActionTextButtonsContainer>
+          <ActionTextButton onClick={() => {}}>repost</ActionTextButton>
+          <ActionTextButton onClick={() => {}}>quote</ActionTextButton>
+        </ActionTextButtonsContainer>
       )}
     </PostCardContainer>
   );
