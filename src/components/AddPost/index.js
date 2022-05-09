@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useAuth } from "../../hooks/useAuth";
+import { postsService } from "../../services/posts";
 import { Button } from "../Button";
 import { TextArea } from "../TextArea";
 import { AddPostTitle, ButtonContainer } from "./styles";
@@ -12,7 +14,20 @@ export function AddPost({ onAddNewPost }) {
     setTextToPost(event.target.value);
   }
 
-  function handleOnClickToPost() {}
+  async function handleOnClickToPost() {
+    const responseFromAddNewPost = await postsService.addNewPost({
+      userId: userLoggedIn.id,
+      postText: textToPost,
+    });
+
+    if (!responseFromAddNewPost.error) {
+      toast(responseFromAddNewPost.error);
+
+      return;
+    }
+
+    toast("Post added!");
+  }
 
   return (
     <div>

@@ -109,19 +109,22 @@ export const postsService = {
   },
 
   async addNewPost({ userId, postText }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const allPosts = await postsService.getAllPosts();
-        const user = await userService.getUserById({ id: userId });
+    const allPosts = await postsService.getAllPosts();
+    const user = await userService.getUserById({ id: userId });
 
-        const postsWithNewPost = allPosts.unshift({
-          id: uuidv4(),
-          type: "post",
-          author: user,
-          text: postText,
-          createdBy: user,
-          createdAt: new Date().getTime(),
-        });
+    return new Promise((resolve, reject) => {
+      try {
+        const postsWithNewPost = [
+          {
+            id: uuidv4(),
+            type: "post",
+            author: user,
+            text: postText,
+            createdBy: user,
+            createdAt: new Date().getTime(),
+          },
+          ...allPosts,
+        ];
 
         localStorage.setItem(
           localStorageKeys.POSTS,

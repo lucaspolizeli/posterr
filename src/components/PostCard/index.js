@@ -44,7 +44,7 @@ export function PostCard({
 
       {author && (
         <UserNameTextButton onClick={handleOnClickOverUserProfile}>
-          @{author.user}
+          @{author.username}
         </UserNameTextButton>
       )}
 
@@ -53,7 +53,7 @@ export function PostCard({
       {type === postType.QUOTE && (
         <QuoteTextContainer>
           <UserNameTextButton onClick={handleOnClickOverQuoteUserProfile}>
-            @{quoteUser.user}
+            @{quoteUser.username}
           </UserNameTextButton>
 
           <PostText>{quoteText}</PostText>
