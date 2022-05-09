@@ -18,6 +18,8 @@ export function PostCard({
   quoteUser,
   quoteText,
   onProfileClick,
+  onClickToQuote,
+  onClickToRepost,
 }) {
   function handleOnClickOverUserProfile() {
     onProfileClick(author.id);
@@ -60,8 +62,8 @@ export function PostCard({
 
       {type === postType.POST && (
         <ActionTextButtonsContainer>
-          <ActionTextButton onClick={() => {}}>repost</ActionTextButton>
-          <ActionTextButton onClick={() => {}}>quote</ActionTextButton>
+          <ActionTextButton onClick={onClickToRepost}>repost</ActionTextButton>
+          <ActionTextButton onClick={onClickToQuote}>quote</ActionTextButton>
         </ActionTextButtonsContainer>
       )}
     </PostCardContainer>

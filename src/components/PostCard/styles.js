@@ -59,7 +59,7 @@ export const ActionTextButton = styled.button`
 
   &:last-child {
     padding-left: 8px;
-    border-left: 1px solid var(--medium-gray);
+    border-left: 2px solid var(--medium-gray);
   }
 `;
 
