@@ -9,6 +9,17 @@ export const userService = {
     localStorage.setItem(localStorageKeys.USERS, JSON.stringify(usersMock));
   },
 
+  async getUserLoggedIn() {
+    return new Promise((resolve) => {
+      resolve({
+        id: "2ac2a7f1-2f4d-4f5b-b648-a0bb4df8197d",
+        name: "Donald Edwards",
+        createdAt: 1652063498018,
+        username: "donald",
+      });
+    });
+  },
+
   async getUserById({ id }) {
     return new Promise((resolve, reject) => {
       userService.populate();

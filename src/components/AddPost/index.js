@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../Button";
 import { TextArea } from "../TextArea";
 import { AddPostTitle, ButtonContainer } from "./styles";
 
 export function AddPost({ onAddNewPost }) {
+  const { userLoggedIn } = useAuth();
   const [textToPost, setTextToPost] = useState("");
 
   function handleOnChangeTextArea(event) {
@@ -15,7 +17,7 @@ export function AddPost({ onAddNewPost }) {
   return (
     <div>
       <AddPostTitle>
-        Hey <span>{userName}</span>! What do you want to post?
+        Hey <span>{userLoggedIn.name}</span>! What do you want to post?
       </AddPostTitle>
 
       <TextArea value={textToPost} onChange={handleOnChangeTextArea} />
