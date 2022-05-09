@@ -3,7 +3,7 @@ import { Button } from "../Button";
 import { TextArea } from "../TextArea";
 import { AddPostTitle, ButtonContainer } from "./styles";
 
-export function AddPost({ userName }) {
+export function AddPost({ onAddNewPost }) {
   const [textToPost, setTextToPost] = useState("");
 
   function handleOnChangeTextArea(event) {

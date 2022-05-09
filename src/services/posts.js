@@ -17,10 +17,29 @@ export const postsService = {
       postsService.populate();
 
       try {
-        const responseFromAPI = localStorage.getItem(localStorageKeys.POSTS);
-        const responseParsedToJSON = JSON.parse(responseFromAPI);
+        const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
+        const postsParsedToJSON = JSON.parse(postsFromAPI);
 
-        resolve(responseParsedToJSON);
+        resolve(postsParsedToJSON);
+      } catch (error) {
+        reject({ error: "Error to fetch data, try again later." });
+      }
+    });
+  },
+
+  async getPostsByUserId({ userId }) {
+    return new Promise((resolve, reject) => {
+      postsService.populate();
+
+      try {
+        const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
+        const postsParsedToJSON = JSON.parse(postsFromAPI);
+
+        const postsFilteredByUserId = postsParsedToJSON.filter(
+          (posts) => posts.createdBy.id === userId
+        );
+
+        resolve(postsFilteredByUserId);
       } catch (error) {
         reject({ error: "Error to fetch data, try again later." });
       }
