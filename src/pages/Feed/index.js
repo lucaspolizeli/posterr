@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { AddPost } from "../../components/AddPost";
 import { PostCard } from "../../components/PostCard";
-import { postsService } from "../../services/posts";
+import { usePosts } from "../../hooks/usePosts";
 import {
   AddPostContainer,
   Divider,
@@ -10,21 +9,12 @@ import {
 } from "./styles";
 
 export function FeedPage() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    fetchDataOnLoadFeed();
-  }, []);
-
-  async function fetchDataOnLoadFeed() {
-    const allPosts = await postsService.getAllPosts();
-    setPosts(allPosts);
-  }
+  const { posts } = usePosts();
 
   return (
     <FeedContainer>
       <AddPostContainer>
-        <AddPost userName={"Lucas"} />
+        <AddPost />
       </AddPostContainer>
 
       <PostsContainer>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { userService } from "../services/user";
 
 export function useAuth() {
-  const [userLoggedIn, setUserLoggedIn] = useState({});
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     getUserLoggedInOnLoad();
@@ -10,8 +10,8 @@ export function useAuth() {
 
   async function getUserLoggedInOnLoad() {
     const userLoggedIn = await userService.getUserLoggedIn();
-    setUserLoggedIn(userLoggedIn);
+    setUser(userLoggedIn);
   }
 
-  return { userLoggedIn };
+  return { user };
 }

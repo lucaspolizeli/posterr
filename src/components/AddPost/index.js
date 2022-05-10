@@ -1,41 +1,33 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { useAuth } from "../../hooks/useAuth";
-import { postsService } from "../../services/posts";
+import { usePosts } from "../../hooks/usePosts";
 import { Button } from "../Button";
 import { TextArea } from "../TextArea";
 import { AddPostTitle, ButtonContainer } from "./styles";
 
-export function AddPost({ onAddNewPost }) {
-  const { userLoggedIn } = useAuth();
-  const [textToPost, setTextToPost] = useState("");
+export function AddPost() {
+  const { user } = useAuth();
+  const { createPost } = usePosts();
+
+  const [postText, setPostText] = useState("");
 
   function handleOnChangeTextArea(event) {
-    setTextToPost(event.target.value);
+    setPostText(event.target.value);
   }
 
   async function handleOnClickToPost() {
-    const responseFromAddNewPost = await postsService.addNewPost({
-      userId: userLoggedIn.id,
-      postText: textToPost,
-    });
+    await createPost({ postText });
 
-    if (!responseFromAddNewPost.error) {
-      toast(responseFromAddNewPost.error);
-
-      return;
-    }
-
-    toast("Post added!");
+    setPostText("");
   }
 
   return (
     <div>
       <AddPostTitle>
-        Hey <span>{userLoggedIn.name}</span>! What do you want to post?
+        Hey <span>{user.name}</span>! What do you want to post?
       </AddPostTitle>
 
-      <TextArea value={textToPost} onChange={handleOnChangeTextArea} />
+      <TextArea value={postText} onChange={handleOnChangeTextArea} />
 
       <ButtonContainer>
         <Button text="Post" onClick={handleOnClickToPost} />
