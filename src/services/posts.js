@@ -80,21 +80,24 @@ export const postsService = {
   },
 
   async repost({ postId, userId }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const allPosts = await postsService.getAllPosts();
-        const user = await userService.getUserById({ id: userId });
+    const allPosts = await postsService.getAllPosts();
+    const user = await userService.getUserById({ id: userId });
 
+    return new Promise((resolve, reject) => {
+      try {
         const postToRepost = allPosts.find((post) => post.id === postId);
 
-        const postsWithNewPost = allPosts.unshift({
-          id: uuidv4(),
-          createdBy: user,
-          type: postType.REPOST,
-          text: postToRepost.text,
-          author: postToRepost.createdBy,
-          createdAt: new Date().getTime(),
-        });
+        const postsWithNewPost = [
+          {
+            id: uuidv4(),
+            createdBy: user,
+            type: postType.REPOST,
+            text: postToRepost.text,
+            author: postToRepost.createdBy,
+            createdAt: new Date().getTime(),
+          },
+          ...allPosts,
+        ];
 
         localStorage.setItem(
           localStorageKeys.POSTS,

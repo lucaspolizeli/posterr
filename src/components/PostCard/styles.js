@@ -31,6 +31,7 @@ export const RepostText = styled.h3`
 
   span {
     color: var(--twitter);
+    cursor: pointer;
 
     &:hover {
       text-decoration: underline;

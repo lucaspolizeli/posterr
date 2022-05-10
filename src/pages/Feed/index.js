@@ -21,12 +21,13 @@ export function FeedPage() {
         {posts.map((currentPost, index) => (
           <div key={currentPost.id}>
             <PostCard
+              postId={currentPost.id}
               type={currentPost.type}
               text={currentPost.text}
               author={currentPost.author}
+              createdBy={currentPost.createdBy}
               quoteText={currentPost?.quote?.text}
               quoteUser={currentPost?.quote?.author}
-              createdBy={currentPost.createdBy.user}
             />
 
             {index !== posts.length && <Divider />}

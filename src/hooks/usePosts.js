@@ -19,12 +19,25 @@ export function PostsProvider({ children }) {
   }
 
   async function createPost({ postText }) {
-    const responseFromAddNewPost = await postsService.addNewPost({
+    const successfullyPosted = await postsService.addNewPost({
       postText,
       userId: user.id,
     });
 
-    if (responseFromAddNewPost?.error) {
+    if (successfullyPosted?.error) {
+      return;
+    }
+
+    await fetchPosts();
+  }
+
+  async function createRepost({ postId }) {
+    const successfullyReposted = await postsService.repost({
+      postId,
+      userId: user.id,
+    });
+
+    if (successfullyReposted?.error) {
       return;
     }
 
@@ -32,7 +45,7 @@ export function PostsProvider({ children }) {
   }
 
   return (
-    <PostsContext.Provider value={{ posts, createPost }}>
+    <PostsContext.Provider value={{ posts, createPost, createRepost }}>
       {children}
     </PostsContext.Provider>
   );

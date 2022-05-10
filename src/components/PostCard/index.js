@@ -9,18 +9,21 @@ import {
 } from "./styles";
 
 import { postType } from "../../constants/post-type";
+import { usePosts } from "../../hooks/usePosts";
 
 export function PostCard({
   type,
   text,
   author,
+  postId,
   createdBy,
   quoteUser,
   quoteText,
   onProfileClick,
   onClickToQuote,
-  onClickToRepost,
 }) {
+  const { createRepost } = usePosts();
+
   function handleOnClickOverUserProfile() {
     onProfileClick(author.id);
   }
@@ -38,7 +41,9 @@ export function PostCard({
       {type === postType.REPOST && (
         <RepostText>
           ↓ reposted by
-          <span onClick={handleOnClickOverWhoReposted}>@{createdBy.user}</span>
+          <span onClick={handleOnClickOverWhoReposted}>
+            @{createdBy.username}
+          </span>
         </RepostText>
       )}
 
@@ -62,7 +67,10 @@ export function PostCard({
 
       {type === postType.POST && (
         <ActionTextButtonsContainer>
-          <ActionTextButton onClick={onClickToRepost}>repost</ActionTextButton>
+          <ActionTextButton onClick={() => createRepost({ postId })}>
+            repost
+          </ActionTextButton>
+
           <ActionTextButton onClick={onClickToQuote}>quote</ActionTextButton>
         </ActionTextButtonsContainer>
       )}
