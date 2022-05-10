@@ -1,6 +1,10 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { PostCard } from "../../components/PostCard";
 import { usePosts } from "../../hooks/usePosts";
+
 import {
   AddPostContainer,
   Divider,
@@ -10,6 +14,19 @@ import {
 
 export function FeedPage() {
   const { posts } = usePosts();
+  const history = useHistory();
+
+  useEffect(() => {
+    handleRouteOnLoadTheComponent();
+  }, []);
+
+  function handleRouteOnLoadTheComponent() {
+    const hasSelectedRoute = history.location.pathname !== "/";
+
+    if (!hasSelectedRoute) {
+      history.push("/all");
+    }
+  }
 
   return (
     <FeedContainer>
