@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { postsService } from "../services/posts";
 import { useAuth } from "./useAuth";
 
@@ -26,8 +27,11 @@ export function PostsProvider({ children }) {
     });
 
     if (successfullyPosted?.error) {
+      toast.error(successfullyPosted?.error);
       return;
     }
+
+    toast.success("Successfully posted!");
 
     await fetchPosts();
   }
@@ -40,8 +44,12 @@ export function PostsProvider({ children }) {
     });
 
     if (successfullyQuoted?.error) {
+      toast.error(successfullyQuoted?.error);
+
       return;
     }
+
+    toast.success("Successfully posted!");
 
     setSelectedPostToQuote(null);
     await fetchPosts();
@@ -54,9 +62,12 @@ export function PostsProvider({ children }) {
     });
 
     if (successfullyReposted?.error) {
+      toast.error(successfullyReposted?.error);
+
       return;
     }
 
+    toast.success("Successfully reposted!");
     await fetchPosts();
   }
 
