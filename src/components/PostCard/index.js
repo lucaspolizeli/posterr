@@ -20,16 +20,11 @@ export function PostCard({
   quoteUser,
   quoteText,
   onProfileClick,
-  onClickToQuote,
 }) {
-  const { createRepost } = usePosts();
+  const { createRepost, setSelectedPostToQuote } = usePosts();
 
   function handleOnClickOverUserProfile() {
     onProfileClick(author.id);
-  }
-
-  function handleOnClickOverQuoteUserProfile() {
-    onProfileClick(quoteUser.id);
   }
 
   function handleOnClickOverWhoReposted() {
@@ -57,7 +52,7 @@ export function PostCard({
 
       {type === postType.QUOTE && (
         <QuoteTextContainer>
-          <UserNameTextButton onClick={handleOnClickOverQuoteUserProfile}>
+          <UserNameTextButton disabled>
             @{quoteUser.username}
           </UserNameTextButton>
 
@@ -71,7 +66,19 @@ export function PostCard({
             repost
           </ActionTextButton>
 
-          <ActionTextButton onClick={onClickToQuote}>quote</ActionTextButton>
+          <ActionTextButton
+            onClick={() =>
+              setSelectedPostToQuote({
+                type,
+                text,
+                author,
+                createdBy,
+                id: postId,
+              })
+            }
+          >
+            quote
+          </ActionTextButton>
         </ActionTextButtonsContainer>
       )}
     </PostCardContainer>

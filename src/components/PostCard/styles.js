@@ -14,8 +14,8 @@ export const UserNameTextButton = styled.button`
   color: var(--dark-gray);
 
   &:hover {
-    text-decoration: underline;
-    cursor: pointer;
+    text-decoration: ${({ disabled }) => (disabled ? "none" : "underline")};
+    cursor: ${({ disabled }) => (disabled ? "unset" : "pointer")};
   }
 `;
 

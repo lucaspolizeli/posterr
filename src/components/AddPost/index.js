@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { postType } from "../../constants/post-type";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
 import { Button } from "../Button";
+import { PostCard } from "../PostCard";
 import { TextArea } from "../TextArea";
-import { AddPostTitle, ButtonContainer } from "./styles";
+import {
+  AddPostTitle,
+  ButtonContainer,
+  PostCardContainer,
+  QuoteInfoText,
+} from "./styles";
 
 export function AddPost() {
   const { user } = useAuth();
-  const { createPost } = usePosts();
+  const { createPost, createQuote, selectedPostToQuote } = usePosts();
+
+  useEffect(() => {
+    if (!selectedPostToQuote) return;
+
+    window.scrollTo(0, 0);
+  }, [selectedPostToQuote]);
 
   const [postText, setPostText] = useState("");
 
@@ -16,7 +29,14 @@ export function AddPost() {
   }
 
   async function handleOnClickToPost() {
-    await createPost({ postText });
+    if (selectedPostToQuote) {
+      await createQuote({
+        postId: selectedPostToQuote.id,
+        quoteText: postText,
+      });
+    } else {
+      await createPost({ postText });
+    }
 
     setPostText("");
   }
@@ -32,6 +52,21 @@ export function AddPost() {
       <ButtonContainer>
         <Button text="Post" onClick={handleOnClickToPost} />
       </ButtonContainer>
+
+      {selectedPostToQuote && (
+        <>
+          <QuoteInfoText>Comment something about the post below:</QuoteInfoText>
+          <PostCardContainer>
+            <PostCard
+              type={postType.QUOTE}
+              postId={selectedPostToQuote.id}
+              quoteText={selectedPostToQuote.text}
+              quoteUser={selectedPostToQuote.author}
+              createdBy={selectedPostToQuote.createdBy}
+            />
+          </PostCardContainer>
+        </>
+      )}
     </div>
   );
 }

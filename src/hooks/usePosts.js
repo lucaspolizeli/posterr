@@ -6,6 +6,7 @@ const PostsContext = createContext({});
 
 export function PostsProvider({ children }) {
   const [posts, setPosts] = useState([]);
+  const [selectedPostToQuote, setSelectedPostToQuote] = useState(null);
 
   const { user } = useAuth();
 
@@ -19,7 +20,7 @@ export function PostsProvider({ children }) {
   }
 
   async function createPost({ postText }) {
-    const successfullyPosted = await postsService.addNewPost({
+    const successfullyPosted = await postsService.createPost({
       postText,
       userId: user.id,
     });
@@ -31,8 +32,23 @@ export function PostsProvider({ children }) {
     await fetchPosts();
   }
 
+  async function createQuote({ postId, quoteText }) {
+    const successfullyQuoted = await postsService.createQuote({
+      postId,
+      quoteText,
+      userId: user.id,
+    });
+
+    if (successfullyQuoted?.error) {
+      return;
+    }
+
+    setSelectedPostToQuote(null);
+    await fetchPosts();
+  }
+
   async function createRepost({ postId }) {
-    const successfullyReposted = await postsService.repost({
+    const successfullyReposted = await postsService.createRepost({
       postId,
       userId: user.id,
     });
@@ -45,7 +61,16 @@ export function PostsProvider({ children }) {
   }
 
   return (
-    <PostsContext.Provider value={{ posts, createPost, createRepost }}>
+    <PostsContext.Provider
+      value={{
+        posts,
+        createPost,
+        createQuote,
+        createRepost,
+        selectedPostToQuote,
+        setSelectedPostToQuote,
+      }}
+    >
       {children}
     </PostsContext.Provider>
   );

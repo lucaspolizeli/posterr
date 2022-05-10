@@ -46,26 +46,29 @@ export const postsService = {
     });
   },
 
-  async addQuotePost({ postId, userId, text }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const allPosts = await postsService.getAllPosts();
-        const user = await userService.getUserById({ id: userId });
+  async createQuote({ postId, userId, quoteText }) {
+    const allPosts = await postsService.getAllPosts();
+    const user = await userService.getUserById({ id: userId });
 
+    return new Promise((resolve, reject) => {
+      try {
         const postToQuote = allPosts.find((post) => post.id === postId);
 
-        const postsWithNewPost = allPosts.unshift({
-          text,
-          id: uuidv4(),
-          author: user,
-          createdBy: user,
-          type: postType.QUOTE,
-          createdAt: new Date().getTime(),
-          quote: {
-            text: postToQuote.text,
-            author: postToQuote.createdBy,
+        const postsWithNewPost = [
+          {
+            id: uuidv4(),
+            author: user,
+            text: quoteText,
+            createdBy: user,
+            type: postType.QUOTE,
+            createdAt: new Date().getTime(),
+            quote: {
+              text: postToQuote.text,
+              author: postToQuote.createdBy,
+            },
           },
-        });
+          ...allPosts,
+        ];
 
         localStorage.setItem(
           localStorageKeys.POSTS,
@@ -79,7 +82,7 @@ export const postsService = {
     });
   },
 
-  async repost({ postId, userId }) {
+  async createRepost({ postId, userId }) {
     const allPosts = await postsService.getAllPosts();
     const user = await userService.getUserById({ id: userId });
 
@@ -111,7 +114,7 @@ export const postsService = {
     });
   },
 
-  async addNewPost({ userId, postText }) {
+  async createPost({ userId, postText }) {
     const allPosts = await postsService.getAllPosts();
     const user = await userService.getUserById({ id: userId });
 

@@ -15,3 +15,12 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+export const PostCardContainer = styled.div`
+  margin: -8px 0 0 -16px;
+`;
+
+export const QuoteInfoText = styled.p`
+  font-weight: 700;
+  color: var(--dark-gray);
+`;
