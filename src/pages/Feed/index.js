@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
+import { FeedFilter } from "../../components/FeedFilter";
 import { PostCard } from "../../components/PostCard";
-import { Switcher } from "../../components/Switcher";
 import { usePosts } from "../../hooks/usePosts";
 
 import {
@@ -11,7 +11,6 @@ import {
   FeedContainer,
   FeedHeaderContainer,
   FeedTitle,
-  FilterSwitcherContainer,
   PostsContainer,
 } from "./styles";
 
@@ -37,7 +36,8 @@ export function FeedPage() {
         <FeedTitle>
           your <span>feed</span>.
         </FeedTitle>
-        <Switcher />
+
+        <FeedFilter />
       </FeedHeaderContainer>
 
       <PostsContainer>

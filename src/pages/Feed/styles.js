@@ -33,8 +33,9 @@ export const Divider = styled.hr`
 
 export const FeedHeaderContainer = styled.div`
   display: flex;
-  margin: 12px 0 12px 0;
   padding: 0 16px;
+  align-items: center;
+  margin: 12px 0 12px 0;
   justify-content: space-between;
 `;
 
