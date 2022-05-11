@@ -2,42 +2,49 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { FeedFilter } from "../../components/FeedFilter";
-import { PostCard } from "../../components/PostCard";
+import { PostsList } from "../../components/PostsList";
 import { UserInfoModal } from "../../components/UserInfoModal";
 import { validRoutes } from "../../constants/valid-routes";
-import { usePosts } from "../../hooks/usePosts";
 
 import {
   AddPostContainer,
-  Divider,
   FeedContainer,
   FeedHeaderContainer,
   FeedTitle,
-  PostsContainer,
+  PostsListContainer,
 } from "./styles";
 
 export function FeedPage() {
-  const { posts } = usePosts();
-  const history = useHistory();
-
   const [isUserInfoModalOpen, setUserInfoModalOpen] = useState(false);
 
-  function handleOnClickToCloseUserInfoModal() {
-    setUserInfoModalOpen((oldState) => !oldState);
-  }
+  const [selectedUserIdToShowOnModal, setSelectedUserIdToShowOnModal] =
+    useState(false);
 
   useEffect(() => {
+    validateRoutesOnLoadPage();
+  }, []);
+
+  const history = useHistory();
+
+  function validateRoutesOnLoadPage() {
     const currentPath = history.location.pathname;
 
     const isValidRoute =
       currentPath === `/${validRoutes.FILTER_ALL}` ||
-      currentPath === `/${validRoutes.FILTER_FOLLOWING}` ||
-      currentPath === `/${validRoutes.USER_INFO}`;
+      currentPath === `/${validRoutes.FILTER_FOLLOWING}`;
 
     if (!isValidRoute) {
       history.push(`/${validRoutes.FILTER_ALL}`);
     }
-  }, [history]);
+  }
+
+  function handleOnClickToCloseUserInfoModal() {
+    setUserInfoModalOpen(!setUserInfoModalOpen);
+  }
+
+  function handleOnProfileClick(selectedUserId) {
+    setSelectedUserIdToShowOnModal(selectedUserId);
+  }
 
   return (
     <FeedContainer>
@@ -53,26 +60,13 @@ export function FeedPage() {
         <FeedFilter />
       </FeedHeaderContainer>
 
-      <PostsContainer>
-        {posts.map((currentPost, index) => (
-          <div key={currentPost.id}>
-            <PostCard
-              postId={currentPost.id}
-              type={currentPost.type}
-              text={currentPost.text}
-              author={currentPost.author}
-              createdBy={currentPost.createdBy}
-              quoteText={currentPost?.quote?.text}
-              quoteUser={currentPost?.quote?.author}
-            />
-
-            {index !== posts.length && <Divider />}
-          </div>
-        ))}
-      </PostsContainer>
+      <PostsListContainer>
+        <PostsList onProfileClick={handleOnProfileClick} />
+      </PostsListContainer>
 
       <UserInfoModal
         isOpen={isUserInfoModalOpen}
+        userId={selectedUserIdToShowOnModal}
         onCloseModal={handleOnClickToCloseUserInfoModal}
       />
     </FeedContainer>

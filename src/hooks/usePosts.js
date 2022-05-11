@@ -7,6 +7,7 @@ const PostsContext = createContext({});
 
 export function PostsProvider({ children }) {
   const [posts, setPosts] = useState([]);
+
   const [selectedPostToQuote, setSelectedPostToQuote] = useState(null);
 
   const { user } = useAuth();

@@ -18,17 +18,10 @@ export const AddPostContainer = styled.div`
   border-radius: 8px;
 `;
 
-export const PostsContainer = styled.div`
+export const PostsListContainer = styled.div`
   margin-top: 16px;
   border-radius: 8px;
   background-color: white;
-`;
-
-export const Divider = styled.hr`
-  border: 0;
-  height: 1px;
-  margin: 24px 16px;
-  background-color: var(--medium-gray);
 `;
 
 export const FeedHeaderContainer = styled.div`
@@ -44,5 +37,3 @@ export const FeedTitle = styled.h3`
     color: var(--twitter);
   }
 `;
-
-export const FilterSwitcherContainer = styled.div``;

@@ -27,25 +27,6 @@ export const postsService = {
     });
   },
 
-  async getPostsByUserId({ userId }) {
-    return new Promise((resolve, reject) => {
-      postsService.populate();
-
-      try {
-        const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
-        const postsParsedToJSON = JSON.parse(postsFromAPI);
-
-        const postsFilteredByUserId = postsParsedToJSON.filter(
-          (posts) => posts.createdBy.id === userId
-        );
-
-        resolve(postsFilteredByUserId);
-      } catch (error) {
-        reject({ error: "Error to fetch data, try again later." });
-      }
-    });
-  },
-
   async createQuote({ postId, userId, quoteText }) {
     const allPosts = await postsService.getAllPosts();
     const user = await userService.getUserById({ id: userId });
