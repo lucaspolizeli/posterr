@@ -22,8 +22,6 @@ export const userService = {
 
   async getUserById({ id }) {
     return new Promise((resolve, reject) => {
-      userService.populate();
-
       try {
         const responseFromAPI = localStorage.getItem(localStorageKeys.USERS);
         const userParsedToJSON = JSON.parse(responseFromAPI);
@@ -41,5 +39,3 @@ export const userService = {
     });
   },
 };
-
-const followers = [{ followingUserId: 1, followerUserId: 2 }];

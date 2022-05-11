@@ -15,6 +15,7 @@ export const postsService = {
   async getAllPosts() {
     return new Promise((resolve, reject) => {
       postsService.populate();
+      userService.populate();
 
       try {
         const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
