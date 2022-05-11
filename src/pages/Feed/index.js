@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { FeedFilter } from "../../components/FeedFilter";
 import { PostCard } from "../../components/PostCard";
+import { UserInfoModal } from "../../components/UserInfoModal";
 import { validRoutes } from "../../constants/valid-routes";
 import { usePosts } from "../../hooks/usePosts";
 
@@ -19,6 +20,12 @@ export function FeedPage() {
   const { posts } = usePosts();
   const history = useHistory();
 
+  const [isUserInfoModalOpen, setUserInfoModalOpen] = useState(false);
+
+  function handleOnClickToCloseUserInfoModal() {
+    setUserInfoModalOpen((oldState) => !oldState);
+  }
+
   useEffect(() => {
     const currentPath = history.location.pathname;
 
@@ -28,7 +35,7 @@ export function FeedPage() {
       currentPath === `/${validRoutes.USER_INFO}`;
 
     if (!isValidRoute) {
-      history.push("/all");
+      history.push(`/${validRoutes.FILTER_ALL}`);
     }
   }, [history]);
 
@@ -63,6 +70,11 @@ export function FeedPage() {
           </div>
         ))}
       </PostsContainer>
+
+      <UserInfoModal
+        isOpen={isUserInfoModalOpen}
+        onCloseModal={handleOnClickToCloseUserInfoModal}
+      />
     </FeedContainer>
   );
 }
