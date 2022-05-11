@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
+import { postsService } from "../../services/posts";
 import { userService } from "../../services/user";
+import { dateFormatter } from "../../utils/date";
 import { AddPost } from "../AddPost";
+import { Button } from "../Button";
 import { PostsList } from "../PostsList";
 import { Divider } from "../PostsList/styles";
 import {
   AddPostContainer,
+  ButtonContainer,
   CloseButton,
   UserFeedTitle,
   UsernameTitle,
@@ -15,14 +19,21 @@ import {
 
 export function UserInfoModal({ onCloseModal, userId }) {
   const [selectedUser, setSelectedUser] = useState({});
+  const [postsAmount, setPostsAmount] = useState(0);
 
   useEffect(() => {
     getUserOnOpenModal();
+    getAmountOfPostsByUserId();
   }, []);
 
   async function getUserOnOpenModal() {
     const user = await userService.getUserById({ id: userId });
     setSelectedUser(user);
+  }
+
+  async function getAmountOfPostsByUserId() {
+    const postsAmount = await postsService.getAmountOfPostsByUserId({ userId });
+    setPostsAmount(postsAmount);
   }
 
   return (
@@ -43,7 +54,7 @@ export function UserInfoModal({ onCloseModal, userId }) {
       <UserPropertiesContainer>
         <UserPropertyItemWrapper>
           <h4>Member since:</h4>
-          <p>{selectedUser?.createdAt}</p>
+          <p>{dateFormatter(selectedUser?.createdAt)}</p>
         </UserPropertyItemWrapper>
 
         <UserPropertyItemWrapper>
@@ -58,9 +69,15 @@ export function UserInfoModal({ onCloseModal, userId }) {
 
         <UserPropertyItemWrapper>
           <h4>Posts</h4>
-          <p>50</p>
+          <p>{postsAmount}</p>
         </UserPropertyItemWrapper>
       </UserPropertiesContainer>
+
+      <Divider />
+
+      <ButtonContainer>
+        <Button text="Following" />
+      </ButtonContainer>
 
       <Divider />
 

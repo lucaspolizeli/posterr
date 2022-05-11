@@ -51,3 +51,9 @@ export const CloseButton = styled.button`
 export const AddPostContainer = styled.div`
   padding: 0 16px;
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  padding-right: 16px;
+  justify-content: flex-end;
+`;

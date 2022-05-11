@@ -27,6 +27,23 @@ export const postsService = {
     });
   },
 
+  async getAmountOfPostsByUserId({ userId }) {
+    return new Promise((resolve, reject) => {
+      try {
+        const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
+        const postsParsedToJSON = JSON.parse(postsFromAPI);
+
+        const postsByUserId = postsParsedToJSON.filter(
+          (currentPost) => currentPost.createdBy.id === userId
+        );
+
+        resolve(postsByUserId.length);
+      } catch (error) {
+        reject({ error: "Error to fetch data, try again later." });
+      }
+    });
+  },
+
   async createQuote({ postId, userId, quoteText }) {
     const allPosts = await postsService.getAllPosts();
     const user = await userService.getUserById({ id: userId });
