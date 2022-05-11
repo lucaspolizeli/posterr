@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { userService } from "../../services/user";
+import { AddPost } from "../AddPost";
 import { PostsList } from "../PostsList";
 import { Divider } from "../PostsList/styles";
 import {
+  AddPostContainer,
   CloseButton,
   UserFeedTitle,
   UsernameTitle,
@@ -11,14 +13,12 @@ import {
   UserPropertyItemWrapper,
 } from "./styles";
 
-export function UserInfoModal({ isOpen, onCloseModal, userId }) {
-  const [selectedUser, setSelectedUser] = useState(null);
+export function UserInfoModal({ onCloseModal, userId }) {
+  const [selectedUser, setSelectedUser] = useState({});
 
   useEffect(() => {
-    if (!isOpen) return;
-
     getUserOnOpenModal();
-  }, [isOpen]);
+  }, []);
 
   async function getUserOnOpenModal() {
     const user = await userService.getUserById({ id: userId });
@@ -43,7 +43,7 @@ export function UserInfoModal({ isOpen, onCloseModal, userId }) {
       <UserPropertiesContainer>
         <UserPropertyItemWrapper>
           <h4>Member since:</h4>
-          <p>March 25, 2021</p>
+          <p>{selectedUser?.createdAt}</p>
         </UserPropertyItemWrapper>
 
         <UserPropertyItemWrapper>
@@ -64,13 +64,19 @@ export function UserInfoModal({ isOpen, onCloseModal, userId }) {
 
       <Divider />
 
+      <AddPostContainer>
+        <AddPost />
+      </AddPostContainer>
+
+      <Divider />
+
       <UserFeedTitle>
-        lucas <span>posts</span>.
+        {selectedUser?.name?.toLowerCase()} <span>posts</span>.
       </UserFeedTitle>
 
       <Divider />
 
-      <PostsList userIdToFilterPosts={"6b25eda9-14e7-4874-b1fd-9b3c093a26b4"} />
+      <PostsList userIdToFilterPosts={userId} />
     </Modal>
   );
 }

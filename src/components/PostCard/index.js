@@ -10,6 +10,7 @@ import {
 
 import { postType } from "../../constants/post-type";
 import { usePosts } from "../../hooks/usePosts";
+import { useAuth } from "../../hooks/useAuth";
 
 export function PostCard({
   type,
@@ -22,6 +23,7 @@ export function PostCard({
   onProfileClick,
 }) {
   const { createRepost, setSelectedPostToQuote } = usePosts();
+  const { user } = useAuth();
 
   function handleOnClickOverUserProfile() {
     onProfileClick(author.id);
@@ -60,7 +62,7 @@ export function PostCard({
         </QuoteTextContainer>
       )}
 
-      {type === postType.POST && (
+      {type === postType.POST && createdBy.id !== user.id && (
         <ActionTextButtonsContainer>
           <ActionTextButton onClick={() => createRepost({ postId })}>
             repost

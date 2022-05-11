@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { postType } from "../../constants/post-type";
-import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
 import { Button } from "../Button";
 import { PostCard } from "../PostCard";
@@ -13,7 +12,6 @@ import {
 } from "./styles";
 
 export function AddPost() {
-  const { user } = useAuth();
   const { createPost, createQuote, selectedPostToQuote } = usePosts();
 
   useEffect(() => {
@@ -43,9 +41,7 @@ export function AddPost() {
 
   return (
     <div>
-      <AddPostTitle>
-        hey <span>{user.name}</span>! what do you want to post?
-      </AddPostTitle>
+      <AddPostTitle>what do you want to post?</AddPostTitle>
 
       <TextArea value={postText} onChange={handleOnChangeTextArea} />
 

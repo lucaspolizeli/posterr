@@ -40,10 +40,15 @@ export function FeedPage() {
 
   function handleOnClickToCloseUserInfoModal() {
     setUserInfoModalOpen(!setUserInfoModalOpen);
+
+    history.push(`/${validRoutes.FILTER_ALL}`);
   }
 
   function handleOnProfileClick(selectedUserId) {
     setSelectedUserIdToShowOnModal(selectedUserId);
+    setUserInfoModalOpen(true);
+
+    history.push(`/${validRoutes.USER_INFO}`);
   }
 
   return (
@@ -64,11 +69,12 @@ export function FeedPage() {
         <PostsList onProfileClick={handleOnProfileClick} />
       </PostsListContainer>
 
-      <UserInfoModal
-        isOpen={isUserInfoModalOpen}
-        userId={selectedUserIdToShowOnModal}
-        onCloseModal={handleOnClickToCloseUserInfoModal}
-      />
+      {isUserInfoModalOpen && (
+        <UserInfoModal
+          userId={selectedUserIdToShowOnModal}
+          onCloseModal={handleOnClickToCloseUserInfoModal}
+        />
+      )}
     </FeedContainer>
   );
 }

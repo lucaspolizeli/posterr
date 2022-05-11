@@ -17,11 +17,6 @@ export const UserPropertiesContainer = styled.div`
   display: grid;
   padding: 0 16px;
   grid-template-columns: repeat(4, 1fr);
-  /*   
-  @media (max-width: 890px) {
-    gap: 20px;
-    grid-template-columns: repeat(2, 2fr);
-  } */
 `;
 
 export const UserPropertyItemWrapper = styled.div`
@@ -51,4 +46,8 @@ export const CloseButton = styled.button`
   border: none;
   position: absolute;
   background: url(${closeImg}) no-repeat transparent;
+`;
+
+export const AddPostContainer = styled.div`
+  padding: 0 16px;
 `;
