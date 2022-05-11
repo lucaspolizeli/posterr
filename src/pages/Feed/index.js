@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { FeedFilter } from "../../components/FeedFilter";
 import { PostCard } from "../../components/PostCard";
+import { validRoutes } from "../../constants/valid-routes";
 import { usePosts } from "../../hooks/usePosts";
 
 import {
@@ -19,9 +20,14 @@ export function FeedPage() {
   const history = useHistory();
 
   useEffect(() => {
-    const hasSelectedRoute = history.location.pathname !== "/";
+    const currentPath = history.location.pathname;
 
-    if (!hasSelectedRoute) {
+    const isValidRoute =
+      currentPath === `/${validRoutes.FILTER_ALL}` ||
+      currentPath === `/${validRoutes.FILTER_FOLLOWING}` ||
+      currentPath === `/${validRoutes.USER_INFO}`;
+
+    if (!isValidRoute) {
       history.push("/all");
     }
   }, [history]);

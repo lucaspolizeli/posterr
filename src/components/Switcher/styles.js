@@ -18,7 +18,8 @@ export const SwitchContainer = styled.div`
     font-size: 12px;
     padding: 8px 16px;
     text-align: center;
-    border: 1px solid var(--dark-gray);
+    background-color: white;
+    border: 1px solid white;
     transition: all 0.1s ease-in-out;
 
     &:hover {
@@ -29,7 +30,8 @@ export const SwitchContainer = styled.div`
   input:checked + label {
     color: white;
     box-shadow: none;
-    background-color: var(--dark-gray);
+    border: 1px solid var(--twitter);
+    background-color: var(--twitter);
   }
 
   label:first-of-type {

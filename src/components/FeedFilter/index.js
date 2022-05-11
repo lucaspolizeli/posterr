@@ -18,13 +18,13 @@ export function FeedFilter() {
   ];
 
   function checkWhichOptionIsSelected() {
-    if (history.location.pathname.indexOf(validRoutes.FILTER_ALL) > -1) {
-      setSelectedOption(0);
+    if (history.location.pathname.indexOf(validRoutes.FILTER_FOLLOWING) > -1) {
+      setSelectedOption(1);
 
       return;
     }
 
-    setSelectedOption(1);
+    setSelectedOption(0);
   }
 
   function handleOnChangeSwitcher(selectedSwitcherOption) {
