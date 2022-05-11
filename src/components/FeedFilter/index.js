@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { validRoutes } from "../../constants/valid-routes";
 import { Switcher } from "../Switcher";
 
-export function FeedFilter() {
+export function FeedFilter({ selectedMode }) {
   const history = useHistory();
 
   const [selectedOption, setSelectedOption] = useState(0);
@@ -19,11 +19,13 @@ export function FeedFilter() {
 
   function checkWhichOptionIsSelected() {
     if (history.location.pathname.indexOf(validRoutes.FILTER_FOLLOWING) > -1) {
+      selectedMode(filterOptions[1].value);
       setSelectedOption(1);
 
       return;
     }
 
+    selectedMode(filterOptions[0].value);
     setSelectedOption(0);
   }
 

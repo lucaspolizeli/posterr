@@ -16,6 +16,7 @@ import {
 
 export function FeedPage() {
   const [isUserInfoModalOpen, setUserInfoModalOpen] = useState(false);
+  const [filterMode, setFilterMode] = useState(validRoutes.FILTER_ALL);
 
   const [selectedUserIdToShowOnModal, setSelectedUserIdToShowOnModal] =
     useState(false);
@@ -34,13 +35,23 @@ export function FeedPage() {
       currentPath === `/${validRoutes.FILTER_FOLLOWING}`;
 
     if (!isValidRoute) {
+      setFilterMode(validRoutes.FILTER_ALL);
       history.push(`/${validRoutes.FILTER_ALL}`);
     }
+
+    if (currentPath.indexOf(validRoutes.FILTER_FOLLOWING) > -1) {
+      setFilterMode(validRoutes.FILTER_FOLLOWING);
+    }
+  }
+
+  function handleOnChangeFitlerMode(filterMode) {
+    setFilterMode(filterMode);
   }
 
   function handleOnClickToCloseUserInfoModal() {
     setUserInfoModalOpen(!setUserInfoModalOpen);
 
+    setFilterMode(validRoutes.FILTER_ALL);
     history.push(`/${validRoutes.FILTER_ALL}`);
   }
 
@@ -48,6 +59,7 @@ export function FeedPage() {
     setSelectedUserIdToShowOnModal(selectedUserId);
     setUserInfoModalOpen(true);
 
+    setFilterMode(validRoutes.FILTER_ALL);
     history.push(`/${validRoutes.USER_INFO}`);
   }
 
@@ -62,11 +74,14 @@ export function FeedPage() {
           your <span>feed</span>.
         </FeedTitle>
 
-        <FeedFilter />
+        <FeedFilter selectedMode={handleOnChangeFitlerMode} />
       </FeedHeaderContainer>
 
       <PostsListContainer>
-        <PostsList onProfileClick={handleOnProfileClick} />
+        <PostsList
+          filterMode={filterMode}
+          onProfileClick={handleOnProfileClick}
+        />
       </PostsListContainer>
 
       {isUserInfoModalOpen && (
