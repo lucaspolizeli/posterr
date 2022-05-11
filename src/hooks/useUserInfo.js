@@ -48,11 +48,11 @@ export function useUserInfo({ userToGetInfoId }) {
   }
 
   async function getAmountOfPostsByUserId() {
-    const postsAmount = await postsService.getAmountOfPostsByUserId({
+    const postsAmount = await postsService.getPostsByUserId({
       userId: userToGetInfoId,
     });
 
-    setPostsAmount(postsAmount);
+    setPostsAmount(postsAmount.length);
   }
 
   async function verifyIfIsLoggedInUserFollowing() {

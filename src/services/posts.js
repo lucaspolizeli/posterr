@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { postsMock } from "../__mocks__/posts";
 import { userService } from "./user";
 import { postType } from "../constants/post-type";
+import { dateFormatter } from "../utils/date";
 
 export const postsService = {
   populate() {
@@ -28,7 +29,7 @@ export const postsService = {
     });
   },
 
-  async getAmountOfPostsByUserId({ userId }) {
+  async getPostsByUserId({ userId }) {
     return new Promise((resolve, reject) => {
       try {
         const postsFromAPI = localStorage.getItem(localStorageKeys.POSTS);
@@ -38,7 +39,7 @@ export const postsService = {
           (currentPost) => currentPost.createdBy.id === userId
         );
 
-        resolve(postsByUserId.length);
+        resolve(postsByUserId);
       } catch (error) {
         reject({ error: "Error to fetch data, try again later." });
       }
@@ -109,6 +110,28 @@ export const postsService = {
         resolve();
       } catch (error) {
         reject({ error: "Error to add post, try again later." });
+      }
+    });
+  },
+
+  async isUserAllowedToPost({ userId }) {
+    const userPosts = await postsService.getPostsByUserId({ userId });
+    const currentDate = dateFormatter(new Date().getTime());
+
+    return new Promise((resolve, reject) => {
+      try {
+        const postsPostedOnCurrentDate = userPosts.filter(
+          (currentUserPost) =>
+            dateFormatter(currentUserPost.createdAt) === currentDate
+        );
+
+        if (postsPostedOnCurrentDate.length >= 5) {
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      } catch (error) {
+        reject({ error: "Error to fetch data, try again later." });
       }
     });
   },

@@ -21,7 +21,24 @@ export function PostsProvider({ children }) {
     setPosts(allPosts);
   }
 
+  async function isUserAbleToPost() {
+    const isUserAllowedToPost = await postsService.isUserAllowedToPost({
+      userId: user.id,
+    });
+
+    if (!isUserAllowedToPost) {
+      toast.error("You have reached the posts limit per day.");
+
+      return;
+    }
+
+    return true;
+  }
+
   async function createPost({ postText }) {
+    const userAllowedToPost = await isUserAbleToPost();
+    if (!userAllowedToPost) return;
+
     const successfullyPosted = await postsService.createPost({
       postText,
       userId: user.id,
@@ -38,6 +55,9 @@ export function PostsProvider({ children }) {
   }
 
   async function createQuote({ postId, quoteText }) {
+    const userAllowedToPost = await isUserAbleToPost();
+    if (!userAllowedToPost) return;
+
     const successfullyQuoted = await postsService.createQuote({
       postId,
       quoteText,
@@ -57,6 +77,9 @@ export function PostsProvider({ children }) {
   }
 
   async function createRepost({ postId }) {
+    const userAllowedToPost = await isUserAbleToPost();
+    if (!userAllowedToPost) return;
+
     const successfullyReposted = await postsService.createRepost({
       postId,
       userId: user.id,
