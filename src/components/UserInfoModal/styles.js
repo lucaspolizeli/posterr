@@ -17,6 +17,11 @@ export const UserPropertiesContainer = styled.div`
   display: grid;
   padding: 0 16px;
   grid-template-columns: repeat(4, 1fr);
+
+  @media (max-width: 890px) {
+    gap: 20px;
+    grid-template-columns: repeat(2, 2fr);
+  }
 `;
 
 export const UserPropertyItemWrapper = styled.div`
