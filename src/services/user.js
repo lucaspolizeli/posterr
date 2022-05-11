@@ -12,10 +12,10 @@ export const userService = {
   async getUserLoggedIn() {
     return new Promise((resolve) => {
       resolve({
-        id: "2ac2a7f1-2f4d-4f5b-b648-a0bb4df8197d",
-        name: "Donald Edwards",
-        createdAt: 1652063498018,
-        username: "donald",
+        id: "797f6ce2-9f14-4c46-bf5e-05d446b34c84",
+        name: "Lucas Polizeli",
+        createdAt: 1652063207108,
+        username: "lucas",
       });
     });
   },
