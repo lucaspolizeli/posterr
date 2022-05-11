@@ -44,7 +44,7 @@ export function AddPost() {
   return (
     <div>
       <AddPostTitle>
-        Hey <span>{user.name}</span>! What do you want to post?
+        hey <span>{user.name}</span>! what do you want to post?
       </AddPostTitle>
 
       <TextArea value={postText} onChange={handleOnChangeTextArea} />

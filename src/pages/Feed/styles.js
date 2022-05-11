@@ -30,3 +30,18 @@ export const Divider = styled.hr`
   margin: 24px 16px;
   background-color: var(--medium-gray);
 `;
+
+export const FeedHeaderContainer = styled.div`
+  display: flex;
+  margin: 12px 0 12px 0;
+  padding: 0 16px;
+  justify-content: space-between;
+`;
+
+export const FeedTitle = styled.h3`
+  span {
+    color: var(--twitter);
+  }
+`;
+
+export const FilterSwitcherContainer = styled.div``;

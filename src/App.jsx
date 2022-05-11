@@ -4,7 +4,7 @@ import { GlobalStyle } from "./styles/global";
 
 import { ToastContainer } from "react-toastify";
 import { PostsProvider } from "./hooks/usePosts";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 

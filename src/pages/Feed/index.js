@@ -2,12 +2,16 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { PostCard } from "../../components/PostCard";
+import { Switcher } from "../../components/Switcher";
 import { usePosts } from "../../hooks/usePosts";
 
 import {
   AddPostContainer,
   Divider,
   FeedContainer,
+  FeedHeaderContainer,
+  FeedTitle,
+  FilterSwitcherContainer,
   PostsContainer,
 } from "./styles";
 
@@ -16,22 +20,25 @@ export function FeedPage() {
   const history = useHistory();
 
   useEffect(() => {
-    handleRouteOnLoadTheComponent();
-  }, []);
-
-  function handleRouteOnLoadTheComponent() {
     const hasSelectedRoute = history.location.pathname !== "/";
 
     if (!hasSelectedRoute) {
       history.push("/all");
     }
-  }
+  }, [history]);
 
   return (
     <FeedContainer>
       <AddPostContainer>
         <AddPost />
       </AddPostContainer>
+
+      <FeedHeaderContainer>
+        <FeedTitle>
+          your <span>feed</span>.
+        </FeedTitle>
+        <Switcher />
+      </FeedHeaderContainer>
 
       <PostsContainer>
         {posts.map((currentPost, index) => (
