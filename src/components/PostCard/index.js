@@ -12,7 +12,9 @@ import { postType } from "../../constants/post-type";
 import { usePosts } from "../../hooks/usePosts";
 import { useAuth } from "../../hooks/useAuth";
 
-export function PostCard({
+import { memo } from "react";
+
+function PostCardComponent({
   type,
   text,
   author,
@@ -86,3 +88,5 @@ export function PostCard({
     </PostCardContainer>
   );
 }
+
+export const PostCard = memo(PostCardComponent);
