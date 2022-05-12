@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { validRoutes } from "../../constants/valid-routes";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";

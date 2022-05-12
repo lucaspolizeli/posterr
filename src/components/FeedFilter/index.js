@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { filterOptions } from "../../constants/filter-options";
 import { validRoutes } from "../../constants/valid-routes";
 import { Switcher } from "../Switcher";
 
@@ -8,16 +9,7 @@ export function FeedFilter({ selectedMode }) {
 
   const [selectedOption, setSelectedOption] = useState(0);
 
-  useEffect(() => {
-    checkWhichOptionIsSelected();
-  }, []);
-
-  const filterOptions = [
-    { label: "all", value: "all" },
-    { label: "following", value: "following" },
-  ];
-
-  function checkWhichOptionIsSelected() {
+  const checkWhichOptionIsSelected = useCallback(() => {
     if (history.location.pathname.indexOf(validRoutes.FILTER_FOLLOWING) > -1) {
       selectedMode(filterOptions[1].value);
       setSelectedOption(1);
@@ -27,7 +19,7 @@ export function FeedFilter({ selectedMode }) {
 
     selectedMode(filterOptions[0].value);
     setSelectedOption(0);
-  }
+  }, [history.location.pathname, selectedMode]);
 
   function handleOnChangeSwitcher(selectedSwitcherOption) {
     history.push(selectedSwitcherOption);

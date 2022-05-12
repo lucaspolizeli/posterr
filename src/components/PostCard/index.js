@@ -22,8 +22,8 @@ export function PostCard({
   quoteText,
   onProfileClick,
 }) {
-  const { createRepost, setSelectedPostToQuote } = usePosts();
   const { user } = useAuth();
+  const { createRepost, setSelectedPostToQuote } = usePosts();
 
   function handleOnClickOverUserProfile() {
     onProfileClick(author.id);
