@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { validRoutes } from "../../constants/valid-routes";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
@@ -12,19 +12,15 @@ export function PostsList({ onProfileClick, userIdToFilterPosts, filterMode }) {
 
   const [userFollows, setUserFollows] = useState([]);
 
-  useEffect(() => {
-    getUserFollows();
-  }, [filterMode, userIdToFilterPosts]);
-
-  async function getUserFollows() {
+  const getUserFollows = useCallback(async () => {
     const userFollows = await followersService.getWhoUserFollows({
       userId: user.id,
     });
 
     setUserFollows(userFollows.map((userFollow) => userFollow.followingUserId));
-  }
+  }, [user.id]);
 
-  function returnPostsFiltered() {
+  const returnPostsFiltered = useCallback(() => {
     const isOnlyFollowingPostsFilter =
       filterMode === validRoutes.FILTER_FOLLOWING;
 
@@ -41,7 +37,11 @@ export function PostsList({ onProfileClick, userIdToFilterPosts, filterMode }) {
     return posts.filter(
       (currentPost) => currentPost.createdBy.id === userIdToFilterPosts
     );
-  }
+  }, [filterMode, posts, userFollows, userIdToFilterPosts]);
+
+  useEffect(() => {
+    getUserFollows();
+  }, [getUserFollows]);
 
   return (
     <>

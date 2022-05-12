@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { filterOptions } from "../../constants/filter-options";
 import { validRoutes } from "../../constants/valid-routes";
@@ -20,6 +20,10 @@ export function FeedFilter({ selectedMode }) {
     selectedMode(filterOptions[0].value);
     setSelectedOption(0);
   }, [history.location.pathname, selectedMode]);
+
+  useEffect(() => {
+    checkWhichOptionIsSelected();
+  }, [checkWhichOptionIsSelected]);
 
   function handleOnChangeSwitcher(selectedSwitcherOption) {
     history.push(selectedSwitcherOption);
