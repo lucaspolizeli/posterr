@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { followersService } from "../services/followers";
 import { postsService } from "../services/posts";
 import { userService } from "../services/user";
@@ -15,6 +15,44 @@ export function useUserInfo({ userToGetInfoId }) {
 
   const [isLoggedInUserFollowing, setIsLoggedInUserFollowing] = useState(false);
 
+  const getUser = useCallback(async () => {
+    const user = await userService.getUserById({ id: userToGetInfoId });
+    setSelectedUser(user);
+  }, [userToGetInfoId]);
+
+  const getAmountOfFollowers = useCallback(async () => {
+    const followers = await followersService.getUserFollowers({
+      userId: userToGetInfoId,
+    });
+
+    setUserFollowers(followers.length);
+  }, [userToGetInfoId]);
+
+  const getAmountOfFollowings = useCallback(async () => {
+    const follows = await followersService.getWhoUserFollows({
+      userId: userToGetInfoId,
+    });
+
+    setWhoUserFollows(follows.length);
+  }, [userToGetInfoId]);
+
+  const getAmountOfPostsByUserId = useCallback(async () => {
+    const postsAmount = await postsService.getPostsByUserId({
+      userId: userToGetInfoId,
+    });
+
+    setPostsAmount(postsAmount.length);
+  }, [userToGetInfoId]);
+
+  const verifyIfIsLoggedInUserFollowing = useCallback(async () => {
+    const isFollowing = await followersService.isFollowing({
+      followerUserId: user.id,
+      userIdToCheck: userToGetInfoId,
+    });
+
+    setIsLoggedInUserFollowing(isFollowing);
+  }, [user.id, userToGetInfoId]);
+
   useEffect(() => {
     getUser();
 
@@ -24,45 +62,14 @@ export function useUserInfo({ userToGetInfoId }) {
     verifyIfIsLoggedInUserFollowing();
 
     getAmountOfPostsByUserId();
-  }, [user]);
-
-  async function getUser() {
-    const user = await userService.getUserById({ id: userToGetInfoId });
-    setSelectedUser(user);
-  }
-
-  async function getAmountOfFollowers() {
-    const followers = await followersService.getUserFollowers({
-      userId: userToGetInfoId,
-    });
-
-    setUserFollowers(followers.length);
-  }
-
-  async function getAmountOfFollowings() {
-    const follows = await followersService.getWhoUserFollows({
-      userId: userToGetInfoId,
-    });
-
-    setWhoUserFollows(follows.length);
-  }
-
-  async function getAmountOfPostsByUserId() {
-    const postsAmount = await postsService.getPostsByUserId({
-      userId: userToGetInfoId,
-    });
-
-    setPostsAmount(postsAmount.length);
-  }
-
-  async function verifyIfIsLoggedInUserFollowing() {
-    const isFollowing = await followersService.isFollowing({
-      followerUserId: user.id,
-      userIdToCheck: userToGetInfoId,
-    });
-
-    setIsLoggedInUserFollowing(isFollowing);
-  }
+  }, [
+    user,
+    getUser,
+    getAmountOfFollowers,
+    getAmountOfFollowings,
+    getAmountOfPostsByUserId,
+    verifyIfIsLoggedInUserFollowing,
+  ]);
 
   async function followOrUnfollowUser() {
     if (isLoggedInUserFollowing) {
