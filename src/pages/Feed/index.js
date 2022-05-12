@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AddPost } from "../../components/AddPost";
 import { FeedFilter } from "../../components/FeedFilter";
@@ -21,13 +21,9 @@ export function FeedPage() {
   const [selectedUserIdToShowOnModal, setSelectedUserIdToShowOnModal] =
     useState(false);
 
-  useEffect(() => {
-    validateRoutesOnLoadPage();
-  }, []);
-
   const history = useHistory();
 
-  function validateRoutesOnLoadPage() {
+  const validateRoutesOnLoadPage = useCallback(() => {
     const currentPath = history.location.pathname;
 
     const isValidRoute =
@@ -42,7 +38,11 @@ export function FeedPage() {
     if (currentPath.indexOf(validRoutes.FILTER_FOLLOWING) > -1) {
       setFilterMode(validRoutes.FILTER_FOLLOWING);
     }
-  }
+  }, [history]);
+
+  useEffect(() => {
+    validateRoutesOnLoadPage();
+  }, [validateRoutesOnLoadPage]);
 
   function handleOnChangeFitlerMode(filterMode) {
     setFilterMode(filterMode);
